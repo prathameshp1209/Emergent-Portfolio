@@ -679,48 +679,9 @@ const App = () => {
           </motion.div>
 
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => {
-              const { ref, inView } = useInView({
-                threshold: 0.3,
-                triggerOnce: true
-              });
-
-              return (
-                <motion.div
-                  key={index}
-                  ref={ref}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="text-center group"
-                >
-                  <Tilt
-                    options={{
-                      max: 25,
-                      scale: 1.05,
-                      speed: 300,
-                    }}
-                  >
-                    <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-gray-700/20 hover:shadow-2xl transition-all duration-300">
-                      <div className="bg-gradient-to-br from-blue-500 to-purple-500 p-4 rounded-2xl w-fit mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                        <stat.icon className="text-white" size={32} />
-                      </div>
-                      <div className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-2">
-                        {inView && (
-                          <CountUp
-                            end={stat.number}
-                            duration={2}
-                            suffix={stat.suffix}
-                          />
-                        )}
-                      </div>
-                      <p className="text-gray-600 dark:text-gray-300 font-medium">{stat.label}</p>
-                    </div>
-                  </Tilt>
-                </motion.div>
-              );
-            })}
+            {stats.map((stat, index) => (
+              <StatItem key={index} stat={stat} index={index} />
+            ))}
           </div>
         </div>
       </section>
