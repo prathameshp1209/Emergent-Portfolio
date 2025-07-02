@@ -1169,52 +1169,9 @@ const App = () => {
                     </div>
                     
                     <div className="space-y-6">
-                      {skillList.map((skill, index) => {
-                        const { ref, inView } = useInView({
-                          threshold: 0.3,
-                          triggerOnce: true
-                        });
-
-                        return (
-                          <motion.div
-                            key={skill.name}
-                            ref={ref}
-                            initial={{ opacity: 0, x: -20 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.6, delay: index * 0.1 }}
-                            viewport={{ once: true }}
-                            className="group/skill"
-                          >
-                            <div className="flex items-center justify-between mb-3">
-                              <div className="flex items-center">
-                                <span className="text-2xl mr-3 group-hover/skill:scale-125 transition-transform duration-300">
-                                  {skill.icon}
-                                </span>
-                                <span className="font-semibold text-gray-900 dark:text-white">
-                                  {skill.name}
-                                </span>
-                              </div>
-                              <span className="text-sm font-bold text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
-                                {skill.level}%
-                              </span>
-                            </div>
-                            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
-                              <motion.div
-                                initial={{ width: 0 }}
-                                animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
-                                transition={{ duration: 1.5, delay: index * 0.1, ease: "easeOut" }}
-                                className={`bg-gradient-to-r ${skill.color} h-3 rounded-full relative overflow-hidden`}
-                              >
-                                <motion.div
-                                  className="absolute inset-0 bg-white/30"
-                                  animate={{ x: ['-100%', '100%'] }}
-                                  transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-                                />
-                              </motion.div>
-                            </div>
-                          </motion.div>
-                        );
-                      })}
+                      {skillList.map((skill, index) => (
+                        <SkillItem key={skill.name} skill={skill} index={index} />
+                      ))}
                     </div>
                   </div>
                 </Tilt>
