@@ -74,6 +74,96 @@ const FloatingShapes = () => {
   );
 };
 
+// Separate component for stat items to fix hooks issue
+const StatItem = ({ stat, index }) => {
+  const { ref, inView } = useInView({
+    threshold: 0.3,
+    triggerOnce: true
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: index * 0.1 }}
+      viewport={{ once: true }}
+      className="text-center group"
+    >
+      <Tilt
+        options={{
+          max: 25,
+          scale: 1.05,
+          speed: 300,
+        }}
+      >
+        <div className="bg-white/50 dark:bg-gray-800/50 backdrop-blur-xl rounded-3xl p-8 border border-white/20 dark:border-gray-700/20 hover:shadow-2xl transition-all duration-300">
+          <div className="bg-gradient-to-br from-blue-500 to-purple-500 p-4 rounded-2xl w-fit mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
+            <stat.icon className="text-white" size={32} />
+          </div>
+          <div className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-2">
+            {inView && (
+              <CountUp
+                end={stat.number}
+                duration={2}
+                suffix={stat.suffix}
+              />
+            )}
+          </div>
+          <p className="text-gray-600 dark:text-gray-300 font-medium">{stat.label}</p>
+        </div>
+      </Tilt>
+    </motion.div>
+  );
+};
+
+// Separate component for skill items to fix hooks issue
+const SkillItem = ({ skill, index }) => {
+  const { ref, inView } = useInView({
+    threshold: 0.3,
+    triggerOnce: true
+  });
+
+  return (
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, x: -20 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      viewport={{ once: true }}
+      className="group/skill"
+    >
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center">
+          <span className="text-2xl mr-3 group-hover/skill:scale-125 transition-transform duration-300">
+            {skill.icon}
+          </span>
+          <span className="font-semibold text-gray-900 dark:text-white">
+            {skill.name}
+          </span>
+        </div>
+        <span className="text-sm font-bold text-gray-600 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded-full">
+          {skill.level}%
+        </span>
+      </div>
+      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+        <motion.div
+          initial={{ width: 0 }}
+          animate={inView ? { width: `${skill.level}%` } : { width: 0 }}
+          transition={{ duration: 1.5, delay: index * 0.1, ease: "easeOut" }}
+          className={`bg-gradient-to-r ${skill.color} h-3 rounded-full relative overflow-hidden`}
+        >
+          <motion.div
+            className="absolute inset-0 bg-white/30"
+            animate={{ x: ['-100%', '100%'] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+          />
+        </motion.div>
+      </div>
+    </motion.div>
+  );
+};
+
 // Custom cursor component
 const CustomCursor = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
