@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import CountUp from 'react-countup';
-import Tilt from 'react-tilt';
+import { Tilt } from 'react-tilt';
 import { 
   Menu, 
   X, 
